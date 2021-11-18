@@ -7,7 +7,7 @@ export default function Home () {
     return (
         <HomeContainer>
             <section>
-                <Title>Bem vindo(a) ao GratiBox</Title>
+                <Title />
                 <p>Receba em casa um box com chás, produtos organicos, incensos e muito mais...</p>
             </section>
             <section className='buttons'>

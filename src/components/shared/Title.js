@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default function Title({children, ...other}) {
     return (
         <Header other={other}>
-            {children}
+            {children || 'Bem vindo(a) ao GratiBox'}
         </Header>
     )
 } 
