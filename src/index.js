@@ -1,4 +1,10 @@
 import ReactDOM from 'react-dom'
 import App from './App'
+import { Typography, CssBaseline } from '@material-ui/core';
 
-ReactDOM.render(<App />, document.querySelector('.root'))
+ReactDOM.render(
+    <Typography>
+        <CssBaseline />
+        <App />        
+    </Typography>
+, document.querySelector('.root'))

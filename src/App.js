@@ -1,5 +1,7 @@
+import { Button } from '@material-ui/core';
+
 export default function App() {
     return (
-        <h1>Hello</h1>
+        <Button variant="contained">Hello</Button>
     )
 }
