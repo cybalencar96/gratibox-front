@@ -1,10 +1,13 @@
 import ReactDOM from 'react-dom'
 import App from './App'
-import { Typography, CssBaseline } from '@material-ui/core';
+import theme from './theme';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+
+
 
 ReactDOM.render(
-    <Typography>
+    <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />        
-    </Typography>
+        <App />    
+    </ThemeProvider>    
 , document.querySelector('.root'))
