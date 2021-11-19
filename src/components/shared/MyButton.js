@@ -1,14 +1,11 @@
-import styled from "styled-components";
-import { Button } from '@material-ui/core'
+import styled from 'styled-components';
+import { Button } from '@material-ui/core';
 
 const MyButton = styled(Button)`
-    color: white!important;
-    font-weight: bold!important;
-    border-radius: 10px!important;
+  border-radius: 10px !important;
 
-    width: 80%;
-    max-width: 300px;
-
-`
+  width: ${(props) => (props.autoWidth ? 'auto' : '80%')};
+  max-width: ${(props) => (props.autoWidth ? '' : '300px')};
+`;
 
 export default MyButton;

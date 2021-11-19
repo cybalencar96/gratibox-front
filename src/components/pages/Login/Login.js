@@ -6,7 +6,7 @@ import MyButton from '../../shared/MyButton';
 export default function Login() {
   return (
     <LoginContainer>
-      <Title />
+      <Title center />
       <section className="input-section">
         <MyInput label="Name" variant="outlined" />
         <MyInput label="Password" variant="outlined" />
@@ -15,11 +15,13 @@ export default function Login() {
         <MyButton
           disableElevation
           variant="contained"
-          sx={{ height: '60px', fontSize: '22px' }}
+          sx={{ height: '60px', fontSize: '22px', fontWeight: 'bold' }}
         >
           Login
         </MyButton>
-        <MyButton>Ainda não sou grato</MyButton>
+        <MyButton sx={{ color: 'white', fontWeight: 'bold' }}>
+          Ainda não sou grato
+        </MyButton>
       </section>
     </LoginContainer>
   );

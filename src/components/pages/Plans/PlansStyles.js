@@ -13,10 +13,13 @@ const PlansContainer = styled.main`
   overflow: scroll;
   padding: 100px 20px 20px 20px;
 
+  & .header-section {
+    width: 100%;
+  }
+
   & .header-section p {
     font-weight: 300;
     font-size: 18px;
-    text-align: center;
     margin-top: 20px;
     max-width: 400px;
     color: white;

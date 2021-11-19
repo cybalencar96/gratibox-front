@@ -22,6 +22,14 @@
         "js": "ignorePackages"
       }
     ],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "rules": {
+      "comma-dangle": [
+        2,
+        {
+          "functions": "ignore"
+        }
+      ]
+    }
   }
 }
