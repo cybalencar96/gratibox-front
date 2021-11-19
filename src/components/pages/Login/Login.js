@@ -1,7 +1,7 @@
-import Title from '../../shared/Title';
-import { LoginContainer } from './LoginStyles';
-import MyInput from '../../shared/MyInput';
-import MyButton from '../../shared/MyButton';
+import Title from "../../shared/Title";
+import { LoginContainer } from "./LoginStyles";
+import MyInput from "../../shared/MyInput";
+import MyButton from "../../shared/MyButton";
 
 export default function Login() {
   return (
@@ -15,11 +15,11 @@ export default function Login() {
         <MyButton
           disableElevation
           variant="contained"
-          sx={{ height: '60px', fontSize: '22px', fontWeight: 'bold' }}
+          sx={{ height: "60px", fontSize: "22px", fontWeight: "bold" }}
         >
           Login
         </MyButton>
-        <MyButton sx={{ color: 'white', fontWeight: 'bold' }}>
+        <MyButton sx={{ color: "white", fontWeight: "bold" }}>
           Ainda não sou grato
         </MyButton>
       </section>

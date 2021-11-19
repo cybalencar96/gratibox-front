@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Avaliation from './components/pages/Avaliation/Avaliation';
 import Home from './components/pages/Home/Home';
 import Login from './components/pages/Login/Login';
 import Plans from './components/pages/Plans/Plans';
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/signature" element={<Signature />} />
+        <Route path="/avaliation" element={<Avaliation />} />
       </Routes>
     </BrowserRouter>
   );

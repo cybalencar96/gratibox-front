@@ -1,7 +1,7 @@
-import Title from '../../shared/Title';
-import { SignupContainer } from './SignupStyles';
-import MyInput from '../../shared/MyInput';
-import MyButton from '../../shared/MyButton';
+import Title from "../../shared/Title";
+import { SignupContainer } from "./SignupStyles";
+import MyInput from "../../shared/MyInput";
+import MyButton from "../../shared/MyButton";
 
 export default function Signup() {
   return (
@@ -17,11 +17,11 @@ export default function Signup() {
         <MyButton
           disableElevation
           variant="contained"
-          sx={{ height: '60px', fontSize: '22px', fontWeight: 'bold' }}
+          sx={{ height: "60px", fontSize: "22px", fontWeight: "bold" }}
         >
-          Signup
+          Cadastrar
         </MyButton>
-        <MyButton sx={{ color: 'white', fontWeight: 'bold' }}>
+        <MyButton sx={{ color: "white", fontWeight: "bold" }}>
           Já sou grato
         </MyButton>
       </section>
