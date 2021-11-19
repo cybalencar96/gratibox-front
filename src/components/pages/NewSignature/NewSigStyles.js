@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SignatureContainer = styled.main`
+const NewSignatureContainer = styled.main`
   background-color: #6d7ce4;
 
   display: flex;
@@ -20,12 +20,12 @@ const SignatureContainer = styled.main`
   & .header-section p {
     font-weight: 300;
     font-size: 18px;
-    margin: 20px 0 10px 0;
+    margin: 20px 0;
     max-width: 500px;
     color: white;
   }
 
-  & .avaliation {
+  & .button-container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -40,47 +40,20 @@ const PlanSection = styled.section`
   padding: 0 20px 20px 20px;
   max-width: 500px;
 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
   & img {
     width: 100%;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
   }
 
-  & .signature-infos > div {
-  }
-
-  & .signature-infos p {
-    margin: 0;
-    height: 20px;
-  }
-
-  & .info-title {
-    color: #4d65a8;
-    font-weight: bold;
-    font-size: 18px;
-  }
-
-  & .info {
-    color: #e63c80;
-    font-weight: bold;
-    font-size: 18px;
-  }
-
-  & .tab {
-    padding-left: 40px;
-  }
-
-  & .asked-products {
-    margin-top: 20px;
+  & .cep-uf {
     display: flex;
-    justify-content: space-between;
-  }
-
-  @media (max-width: 350px) {
-    .css-uydyiw-MuiButtonBase-root-MuiButton-root {
-      font-size: 10px;
-    }
+    gap: 20px;
   }
 `;
 
-export { SignatureContainer, PlanSection };
+export { NewSignatureContainer, PlanSection };
