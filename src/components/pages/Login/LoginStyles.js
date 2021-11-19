@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const LoginContainer = styled.main`
   background-color: #6d7ce4;
@@ -6,7 +6,6 @@ const LoginContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
 
   width: 100vw;
   height: 100vh;
@@ -24,6 +23,10 @@ const LoginContainer = styled.main`
   & .input-section {
     row-gap: 20px;
     height: 250px;
+  }
+
+  & .buttons-section {
+    margin-top: 150px;
   }
 `;
 

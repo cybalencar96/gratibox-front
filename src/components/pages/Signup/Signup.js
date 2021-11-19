@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Title from "../../shared/Title";
 import { SignupContainer } from "./SignupStyles";
@@ -27,7 +27,7 @@ export default function Signup() {
     setForm({ ...form });
   };
 
-  const handleClose = (alertType) => () => {
+  const handleAlertClose = (alertType) => () => {
     alert[alertType] = "";
     setAlert({ ...alert });
 
@@ -121,12 +121,12 @@ export default function Signup() {
       </form>
       <SuccessAlert
         open={!!alert.success}
-        onClose={handleClose("success")}
+        onClose={handleAlertClose("success")}
         htmlText={alert.success}
       />
       <ErrorAlert
         open={!!alert.error}
-        onClose={handleClose("error")}
+        onClose={handleAlertClose("error")}
         htmlText={alert.error}
       />
     </SignupContainer>

@@ -1,8 +1,20 @@
-import Title from '../../shared/Title';
-import { PlansContainer } from './PlansStyles';
-import MyButton from '../../shared/MyButton';
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../contexts/contexts";
+import Title from "../../shared/Title";
+import { PlansContainer } from "./PlansStyles";
+import MyButton from "../../shared/MyButton";
 
 export default function Plans() {
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user.token) {
+      navigate("/login");
+    }
+  }, []);
+
   return (
     <PlansContainer>
       <section className="header-section">

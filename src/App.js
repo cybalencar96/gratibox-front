@@ -7,7 +7,7 @@ import NewSignature from "./components/pages/NewSignature/NewSignature";
 import Plans from "./components/pages/Plans/Plans";
 import Signature from "./components/pages/Signature/Signature";
 import Signup from "./components/pages/Signup/Signup";
-import { UserContext } from "./contexts/Contexts";
+import { UserContext } from "./contexts/contexts";
 import { getUserFromLocalStorage } from "./utils/localStorage";
 
 export default function App() {
