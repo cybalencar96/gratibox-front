@@ -7,6 +7,8 @@ import { UserContext } from "../../../contexts/contexts";
 import api from "../../../services/api";
 import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts";
 
+const TIME_1_DAY = 1000 * 60 * 60 * 24;
+
 export default function Signature() {
   const { user } = useContext(UserContext);
   const [subscrition, setSubscription] = useState(null);
@@ -39,10 +41,15 @@ export default function Signature() {
     setAlert({ ...alert });
   };
 
+  function getNextDeliverDate(nextOf) {
+    if (subscrition.subscrition_type === "monthly") {
+    }
+  }
+
   return (
     <SignatureContainer>
       <section className="header-section">
-        <Title>Bom te ver por aqui, @User</Title>
+        <Title>Bom te ver por aqui, {user.name}</Title>
         <p>“Agradecer é arte de atrair coisas boas”</p>
       </section>
 
@@ -51,17 +58,23 @@ export default function Signature() {
         <div className="signature-infos">
           <div>
             <span className="info-title">Plano: </span>
-            <span className="info">@Tipo do plano</span>
+            <span className="info">
+              {subscrition.subscrition_type === "monthly"
+                ? "Mensal"
+                : "Semanal"}
+            </span>
           </div>
           <div>
             <span className="info-title">Data da assinatura: </span>
-            <span className="info">dd/mm/aa</span>
+            <span className="info">
+              {new Date(subscrition.created_at).toLocaleDateString()}
+            </span>
           </div>
           <div>
             <div className="info-title">Proximas entregas:</div>
-            <p className="info tab">dd/mm/aa</p>
-            <p className="info tab">dd/mm/aa</p>
-            <p className="info tab">dd/mm/aa</p>
+            <p className="info tab">{getNextDeliverDate(1)}</p>
+            <p className="info tab">{getNextDeliverDate(2)}</p>
+            <p className="info tab">{getNextDeliverDate(3)}</p>
           </div>
         </div>
 
