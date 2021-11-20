@@ -73,7 +73,7 @@ const PlanSection = styled.section`
   & .asked-products {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 
   @media (max-width: 350px) {

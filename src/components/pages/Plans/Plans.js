@@ -4,6 +4,7 @@ import { UserContext } from "../../../contexts/contexts";
 import Title from "../../shared/Title";
 import { PlansContainer } from "./PlansStyles";
 import MyButton from "../../shared/MyButton";
+import api from "../../../services/api";
 
 export default function Plans() {
   const { user } = useContext(UserContext);
@@ -13,6 +14,10 @@ export default function Plans() {
     if (!user.token) {
       navigate("/login");
     }
+
+    api.getSubscription(user.token).then((res) => {
+      navigate("/signature");
+    });
   }, []);
 
   function sendToNewSignature(planType) {

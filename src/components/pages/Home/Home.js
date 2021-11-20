@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import Title from "../../shared/Title";
 import { HomeContainer } from "./HomeStyle";
 import MyButton from "../../shared/MyButton";
 
 export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <HomeContainer>
       <section>
@@ -15,7 +18,7 @@ export default function Home() {
       <section className="buttons">
         <MyButton
           disableElevation
-          onClick={() => console.log("primeiro")}
+          onClick={() => navigate("/signup")}
           variant="contained"
           sx={{ height: "60px", fontSize: "22px", fontWeight: "bold" }}
         >
@@ -23,8 +26,8 @@ export default function Home() {
         </MyButton>
         <MyButton
           secondary
-          onClick={() => console.log("segundo")}
           sx={{ color: "white", fontWeight: "bold" }}
+          onClick={() => navigate("/login")}
         >
           Já sou grato
         </MyButton>

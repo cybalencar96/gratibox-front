@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const PlansContainer = styled.main`
   background-color: #6d7ce4;
@@ -15,13 +15,14 @@ const PlansContainer = styled.main`
 
   & .header-section {
     width: 100%;
+    max-width: 500px;
   }
 
   & .header-section p {
     font-weight: 300;
     font-size: 18px;
     margin-top: 20px;
-    max-width: 400px;
+    max-width: 500px;
     color: white;
   }
 

@@ -6,7 +6,11 @@ import MyButton from "../../shared/MyButton";
 import { UserContext } from "../../../contexts/contexts";
 import api from "../../../services/api";
 import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts";
+import Loading from "../../shared/Loading";
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek.js";
 
+dayjs.extend(isoWeek);
 const TIME_1_DAY = 1000 * 60 * 60 * 24;
 
 export default function Signature() {
@@ -29,10 +33,8 @@ export default function Signature() {
         setSubscription(res.data);
       })
       .catch((err) => {
-        setAlert({
-          alert,
-          error: String(err.response && err.response.statusText),
-        });
+        if (err.response) navigate("/plans");
+        console.error(err);
       });
   }
 
@@ -41,11 +43,48 @@ export default function Signature() {
     setAlert({ ...alert });
   };
 
-  function getNextDeliverDate(nextOf) {
-    if (subscrition.subscrition_type === "monthly") {
+  function getNext3DeliverDates() {
+    const nextDeliverDate = new Date(subscrition.next_deliver_date * 1000);
+    let next2;
+    let next3;
+
+    if (subscrition.subscription_type === "monthly") {
+      next2 = dayjs(
+        new Date(
+          nextDeliverDate.getFullYear(),
+          nextDeliverDate.getMonth + 1,
+          nextDeliverDate.getDay()
+        )
+      );
+      next3 = dayjs(
+        new Date(
+          nextDeliverDate.getFullYear(),
+          nextDeliverDate.getMonth + 2,
+          nextDeliverDate.getDay()
+        )
+      );
+
+      const weekday2 = next2.isoWeekday();
+      const weekday3 = next3.isoWeekday();
+
+      if (weekday2 === 6) next2 = next2.add(2, "day");
+      if (weekday3 === 6) next3 = next3.add(2, "day");
+      if (weekday2 === 7) next2 = next2.add(1, "day");
+      if (weekday3 === 7) next3 = next3.add(1, "day");
     }
+
+    if (subscrition.subscription_type === "weekly") {
+      console.log("entrei");
+      next2 = dayjs(nextDeliverDate).add(7, "day");
+      next3 = dayjs(nextDeliverDate).add(14, "day");
+    }
+
+    return [dayjs(nextDeliverDate), next2, next3];
   }
 
+  console.log(subscrition, subscrition && getNext3DeliverDates());
+
+  if (!subscrition) return <Loading />;
   return (
     <SignatureContainer>
       <section className="header-section">
@@ -67,27 +106,36 @@ export default function Signature() {
           <div>
             <span className="info-title">Data da assinatura: </span>
             <span className="info">
-              {new Date(subscrition.created_at).toLocaleDateString()}
+              {new Date(
+                Number(subscrition.created_at) * 1000
+              ).toLocaleDateString()}
             </span>
           </div>
           <div>
             <div className="info-title">Proximas entregas:</div>
-            <p className="info tab">{getNextDeliverDate(1)}</p>
-            <p className="info tab">{getNextDeliverDate(2)}</p>
-            <p className="info tab">{getNextDeliverDate(3)}</p>
+            {getNext3DeliverDates().map((date) => {
+              return <p className="info tab">{date.format("DD/MM/YYYY")}</p>;
+            })}
           </div>
         </div>
 
         <div className="asked-products">
-          <MyButton autoWidth color="secondary">
-            Chás
-          </MyButton>
-          <MyButton autoWidth color="secondary">
-            Produtos Orgânicos
-          </MyButton>
-          <MyButton autoWidth color="secondary">
-            Incensos
-          </MyButton>
+          {subscrition.teas && (
+            <MyButton autoWidth color="secondary">
+              Chás
+            </MyButton>
+          )}
+          {subscrition.organics && (
+            <MyButton autoWidth color="secondary">
+              Produtos Orgânicos
+            </MyButton>
+          )}
+
+          {subscrition.incenses && (
+            <MyButton autoWidth color="secondary">
+              Incensos
+            </MyButton>
+          )}
         </div>
       </PlanSection>
       <div className="avaliation">
