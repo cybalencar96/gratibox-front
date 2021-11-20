@@ -44,6 +44,11 @@ export default function NewSignature() {
   });
 
   useEffect(() => {
+    if (!user.token) {
+      navigate("/login");
+      return;
+    }
+
     if (search[0] !== "weekly" && search[0] !== "monthly") {
       setPlanData({ ...planData, planType: null });
     }
