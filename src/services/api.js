@@ -27,11 +27,21 @@ function subscribe(bodyInfo, token) {
   return axios.post("/subscriber", bodyInfo, configHeaders(token));
 }
 
+function getDeliveries(token) {
+  return axios.get("/deliveries", configHeaders(token));
+}
+
+function sendAvaliation(body, token) {
+  return axios.put("/deliveries", body, configHeaders(token));
+}
+
 const api = {
   login,
   signup,
   getSubscription,
   subscribe,
+  getDeliveries,
+  sendAvaliation,
 };
 
 export default api;

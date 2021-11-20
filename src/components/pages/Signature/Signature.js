@@ -11,7 +11,6 @@ import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek.js";
 
 dayjs.extend(isoWeek);
-const TIME_1_DAY = 1000 * 60 * 60 * 24;
 
 export default function Signature() {
   const { user } = useContext(UserContext);
@@ -143,6 +142,7 @@ export default function Signature() {
           disableElevation
           sx={{ fontSize: "20px", fontWeight: "bold" }}
           variant="contained"
+          onClick={() => navigate("/avaliation")}
         >
           Avaliar entregas
         </MyButton>

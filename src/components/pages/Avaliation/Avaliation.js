@@ -1,3 +1,7 @@
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../contexts/contexts";
+import api from "../../../services/api";
 import Title from "../../shared/Title";
 import {
   AvaliationContainer,
@@ -6,8 +10,117 @@ import {
 } from "./AvaliationStyles";
 import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 import MyButton from "../../shared/MyButton";
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek.js";
+import Loading from "../../shared/Loading";
+import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts.js";
+
+dayjs.extend(isoWeek);
 
 export default function Avaliation() {
+  const { user } = useContext(UserContext);
+  const [deliveries, setDeliveries] = useState(null);
+  const [avals, setAvals] = useState([{}, {}, {}]);
+  const [alert, setAlert] = useState({ success: false, error: false });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user.token) {
+      navigate("/login");
+    }
+
+    setAvals(
+      avals.map((aval) => ({
+        inputs: {},
+        wasGood: null,
+        wasBad: null,
+        deliveryId: null,
+        date: null,
+      }))
+    );
+
+    fetchData();
+  }, []);
+
+  function fetchData() {
+    api
+      .getDeliveries(user.token)
+      .then((res) => {
+        setDeliveries(res.data);
+      })
+      .catch((err) => {
+        if (err.response) navigate("/plans");
+        console.error(err);
+      });
+  }
+
+  const handleAlertClose = (alertType) => () => {
+    alert[alertType] = "";
+    setAlert({ ...alert });
+  };
+
+  async function sendAval() {
+    if (!avals[0].deliveryId && !avals[0].deliveryId && !avals[0].deliveryId) {
+      return setAlert({
+        ...alert,
+        error: "Nada para enviar",
+      });
+    }
+
+    if (!isValidBadAvalInputs()) {
+      return;
+    }
+
+    const results = await Promise.all(
+      avals.map((aval) => {
+        if (aval.wasBad || aval.wasGood) {
+          const body = {
+            deliveryId: aval.deliveryId,
+            avaliation: aval.wasGood ? true : false,
+          };
+
+          if (!body.avaliation) {
+            let avaliationType = aval.inputs.late ? "Entrega atrasada " : "";
+            avaliationType += aval.inputs.unlike
+              ? "Não gostei do que recebi"
+              : "";
+            body["avaliationType"] = avaliationType;
+            body["avaliationDesc"] = aval.inputs.desc;
+          }
+          console.log(body);
+          api.sendAvaliation(body, user.token);
+        }
+      })
+    );
+
+    setAlert({
+      ...alert,
+      success: "Sua avaliação foi registrada com sucesso!",
+    });
+
+    window.location.reload();
+  }
+
+  function isValidBadAvalInputs() {
+    for (let i = 0; i < 3; i++) {
+      if (avals[i].wasBad) {
+        console.log(avals[i]);
+        if (!avals[i].inputs.late && !avals[i].inputs.unlike) {
+          setAlert({ ...alert, error: "Selecione o motivo do deslike" });
+          return false;
+        }
+
+        if (!avals[i].inputs.desc) {
+          setAlert({ ...alert, error: "Dê uma breve explicação do ocorrido" });
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  if (!deliveries) return <Loading />;
   return (
     <AvaliationContainer>
       <section className="header-section">
@@ -21,29 +134,135 @@ export default function Avaliation() {
       <AvalSection>
         <img src="/img/image01.jpg" alt="men meditating" />
         <section className="boxes-aval">
-          <BoxAval />
-          <BoxAval />
-          <BoxAval />
+          {deliveries.map((delivery, idx) => (
+            <BoxAval
+              delivery={delivery || {}}
+              setAvals={setAvals}
+              avals={avals}
+              arrId={idx}
+              setAlert={setAlert}
+              alert={alert}
+            />
+          ))}
         </section>
       </AvalSection>
-      <BadAvaliation />
+
+      {avals[0].wasBad && (
+        <BadAvaliation
+          show={avals[0]}
+          avals={avals}
+          setAvals={setAvals}
+          id={0}
+        />
+      )}
+      {avals[1].wasBad && (
+        <BadAvaliation
+          show={avals[1]}
+          avals={avals}
+          setAvals={setAvals}
+          id={1}
+        />
+      )}
+      {avals[2].wasBad && (
+        <BadAvaliation
+          show={avals[2]}
+          avals={avals}
+          setAvals={setAvals}
+          id={2}
+        />
+      )}
+
+      <div className="button-container">
+        <MyButton disableElevation variant="contained" onClick={sendAval}>
+          Avaliar
+        </MyButton>
+      </div>
+
+      <SuccessAlert
+        open={!!alert.success}
+        onClose={handleAlertClose("success")}
+        htmlText={alert.success}
+      />
+      <ErrorAlert
+        open={!!alert.error}
+        onClose={handleAlertClose("error")}
+        htmlText={alert.error}
+      />
     </AvaliationContainer>
   );
 }
 
-function BoxAval() {
+function BoxAval({ delivery, arrId, setAvals, avals, alert, setAlert }) {
+  const { id, avaliation, delivered_at } = delivery;
+  const [selected, setSelected] = useState([false, false]);
+
+  function formatDate(dateUnixSeconds) {
+    return dayjs(dateUnixSeconds * 1000).format("DD/MM/YYYY");
+  }
+
+  function handleSelection(aval) {
+    if (avaliation !== null) {
+      setAlert({ ...alert, error: "Essa box já foi avaliada" });
+      return;
+    }
+
+    setSelected(selected.map((select, idx) => aval === idx));
+
+    if (aval === 1) {
+      avals[arrId] = {
+        inputs: avals[arrId].inputs,
+        wasBad: true,
+        deliveryId: id,
+        date: formatDate(delivered_at),
+      };
+    } else {
+      avals[arrId] = {
+        deliveryId: id,
+        wasGood: true,
+        wasBad: false,
+        inputs: {},
+      };
+    }
+
+    setAvals([...avals]);
+  }
+
   return (
     <div className="box-aval">
-      <span>Box: dd/mm/aaaa</span>
+      <span className={typeof avaliation === "boolean" ? "avaliated" : ""}>
+        Box: {formatDate(delivered_at)}
+      </span>
       <div className="aval-types">
-        <div>🙏</div>
-        <div>👎</div>
+        <div
+          className={avaliation || selected[0] ? "selected" : ""}
+          onClick={() => handleSelection(0)}
+        >
+          🙏
+        </div>
+        <div
+          className={avaliation === false || selected[1] ? "selected" : ""}
+          onClick={() => handleSelection(1)}
+        >
+          👎
+        </div>
       </div>
     </div>
   );
 }
 
-function BadAvaliation() {
+function BadAvaliation({ show, avals, setAvals, id }) {
+  const { date } = show;
+
+  const handleInputs = (input) => (event) => {
+    if (input === "late" || input === "unlike") {
+      avals[id].inputs[input] = event.target.checked;
+    } else {
+      avals[id].inputs[input] = event.target.value;
+    }
+
+    setAvals([...avals]);
+  };
+
   return (
     <BadAvaliationContainer>
       <section className="header-section">
@@ -54,18 +273,17 @@ function BadAvaliation() {
       <AvalSection>
         <img src="/img/image01.jpg" alt="men meditating" />
         <section className="boxes-bad-aval">
-          <div>Box: dd/mm/aaaa</div>
-          <div>Box: dd/mm/aaaa</div>
+          <div>Box: {date}</div>
         </section>
         <section className="check-container">
           <FormControlLabel
             variant="gratibox"
-            control={<Checkbox />}
+            control={<Checkbox onChange={handleInputs("late")} />}
             label="Entrega atrasada"
           />
           <FormControlLabel
             variant="gratibox"
-            control={<Checkbox />}
+            control={<Checkbox onChange={handleInputs("unlike")} />}
             label="Não gostei do que recebi"
           />
         </section>
@@ -78,14 +296,10 @@ function BadAvaliation() {
           variant="filled"
           fullWidth
           sx={{ backgroundColor: "#E0D1ED" }}
+          onChange={handleInputs("desc")}
+          value={avals[id].inputs.desc}
         />
       </AvalSection>
-
-      <div className="button-container">
-        <MyButton disableElevation variant="contained">
-          Avaliar
-        </MyButton>
-      </div>
     </BadAvaliationContainer>
   );
 }

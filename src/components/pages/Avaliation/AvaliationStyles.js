@@ -23,6 +23,13 @@ const AvaliationContainer = styled.main`
     max-width: 400px;
     color: white;
   }
+
+  & .button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
 `;
 
 const AvalSection = styled.section`
@@ -65,6 +72,14 @@ const AvalSection = styled.section`
     border-radius: 5px;
     padding: 5px;
   }
+
+  & .aval-types .selected {
+    background-color: #c70452;
+  }
+
+  & .avaliated {
+    color: #c70452;
+  }
 `;
 
 const BadAvaliationContainer = styled.section`
@@ -83,13 +98,6 @@ const BadAvaliationContainer = styled.section`
   & .check-container {
     display: flex;
     justify-content: space-evenly;
-    margin: 10px 0;
-  }
-
-  & .button-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
     margin: 10px 0;
   }
 `;
