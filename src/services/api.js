@@ -23,10 +23,15 @@ function getSubscription(token) {
   return axios.get("/subscriber", configHeaders(token));
 }
 
+function subscribe(bodyInfo, token) {
+  return axios.post("/subscriber", bodyInfo, configHeaders(token));
+}
+
 const api = {
   login,
   signup,
   getSubscription,
+  subscribe,
 };
 
 export default api;

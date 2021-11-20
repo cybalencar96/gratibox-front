@@ -15,21 +15,29 @@ export default function Plans() {
     }
   }, []);
 
+  function sendToNewSignature(planType) {
+    navigate(`/signature/new?${planType}`);
+  }
+
   return (
     <PlansContainer>
       <section className="header-section">
-        <Title>Bom te ver por aqui, @User</Title>
+        <Title>Bom te ver por aqui, {user.name}</Title>
         <p>Você ainda não assinou um plano, que tal começar agora?</p>
       </section>
 
       <section className="plan-section">
         <img src="/img/image04.jpg" alt="woman meditating" />
         <p>
-          Você recebe um box por semana. Ideal para quem quer exercer a gratidão
-          todos os dias.
+          Você recebe um box por semana. <br /> <br />
+          Ideal para quem quer exercer a gratidão todos os dias.
         </p>
         <div>
-          <MyButton disableElevation variant="contained">
+          <MyButton
+            disableElevation
+            variant="contained"
+            onClick={() => sendToNewSignature("weekly")}
+          >
             Assinar
           </MyButton>
         </div>
@@ -42,7 +50,11 @@ export default function Plans() {
           começando agora.
         </p>
         <div>
-          <MyButton disableElevation variant="contained">
+          <MyButton
+            disableElevation
+            variant="contained"
+            onClick={() => sendToNewSignature("monthly")}
+          >
             Assinar
           </MyButton>
         </div>
