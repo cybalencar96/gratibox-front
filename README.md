@@ -42,33 +42,34 @@ You will not choose the item, but you can always choose to be grateful for what 
 
 ## **Getting Started**
 
+- Want to simply try it? Access demo by [clicking here](https://gratibox-front-git-main-cybalencar96.vercel.app/)!
+
+- Want to run front and back in local environment? Learn how in README of gratibox-back repository by [clicking here](https://github.com/cybalencar96/gratibox-back)!
+
+- Want to run front local not worrying with back? Keep reading then!
+
+<br />
+
 ### **Prerequisites**
 
 - npm
+- HTTP server
+
+```sh
+npm install serve -g
+```
 
 <br />
 
 ### **Installation**
 
-1.  Clone backend repo
-
-```sh
-https://github.com/cybalencar96/gratibox-back.git
-```
-
-2. Install dependencies executing comand in root
-
-```sh
-npm i
-```
-
-3. Clone frontend repo **in a different folder**
+1. Clone repository
 
 ```sh
 git clone https://github.com/cybalencar96/gratibox-front.git
 ```
 
-4. Install frontend dependencies executing command in root
+2. Install dependencies executing command in root
 
 ```sh
 npm i
@@ -78,14 +79,16 @@ npm i
 
 ### **How to run**
 
-1. Start backend server
+1. build the app
 
 ```sh
-npm run start
+npm run build
 ```
 
-2. Start frontend
+2. Run build
 
 ```sh
-npm start
+serve -s build
 ```
+
+3. Access http://localhost:5000 (default)
