@@ -72,7 +72,6 @@ export default function Signature() {
     }
 
     if (subscrition.subscription_type === "weekly") {
-      console.log("entrei");
       next2 = dayjs(nextDeliverDate).add(7, "day");
       next3 = dayjs(nextDeliverDate).add(14, "day");
     }

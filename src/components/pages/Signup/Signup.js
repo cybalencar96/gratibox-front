@@ -8,10 +8,6 @@ import api from "../../../services/api";
 import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts";
 import { ButtonLoading } from "../../shared/Loading";
 
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_@$!#=+.%*?&])[A-Za-z\d-@_$!#=+.%*?&]{8,20}$/;
-const emailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$/;
-
 const labelStyle = {
   style: { fontWeight: "bold", fontSize: "17px" },
 };
@@ -45,8 +41,8 @@ export default function Signup() {
     e.preventDefault();
     setLoading(true);
     if (form.password !== form.confirmPassword) {
-      console.log(form);
       setAlert({ ...alert, error: "Senhas não coincidem" });
+      setLoading(false);
       return;
     }
 
@@ -105,7 +101,7 @@ export default function Signup() {
             value={form.password}
             type="password"
             required
-            inputProps={{ pattern: passwordRegex, id: "password" }}
+            inputProps={{ id: "password" }}
           />
           <MyInput
             color="common"
@@ -116,7 +112,7 @@ export default function Signup() {
             value={form.confirmPassword}
             type="password"
             required
-            inputProps={{ pattern: passwordRegex, id: "confirmPassword" }}
+            inputProps={{ id: "confirmPassword" }}
           />
         </section>
 
