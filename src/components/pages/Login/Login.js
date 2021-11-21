@@ -4,7 +4,7 @@ import Title from "../../shared/Title";
 import { LoginContainer } from "./LoginStyles";
 import MyInput from "../../shared/MyInput";
 import MyButton from "../../shared/MyButton";
-import { UserContext } from "../../../contexts/contexts";
+import { UserContext } from "../../../contexts/UserContext";
 import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts";
 import api from "../../../services/api";
 import Loading, { ButtonLoading } from "../../shared/Loading";

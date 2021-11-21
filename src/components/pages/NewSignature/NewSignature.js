@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { UserContext } from "../../../contexts/contexts";
+import { UserContext } from "../../../contexts/UserContext";
 import Title from "../../shared/Title";
 import { NewSignatureContainer, PlanSection } from "./NewSigStyles";
 import {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Title from "../../shared/Title";
 import { SignatureContainer, PlanSection } from "./SignatureStyles";
 import MyButton from "../../shared/MyButton";
-import { UserContext } from "../../../contexts/contexts";
+import { UserContext } from "../../../contexts/UserContext";
 import api from "../../../services/api";
 import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts";
 import Loading from "../../shared/Loading";

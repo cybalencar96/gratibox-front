@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../../contexts/contexts";
+import { UserContext } from "../../../contexts/UserContext";
 import Title from "../../shared/Title";
 import { PlansContainer } from "./PlansStyles";
 import MyButton from "../../shared/MyButton";
