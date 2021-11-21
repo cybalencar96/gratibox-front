@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL =
-  process.env.REACT_APP_SERVER_URL || "TODO - deploy link here";
+  process.env.REACT_APP_SERVER_URL || "https://git.heroku.com/gratibox-app.git";
 
 const configHeaders = (token) => {
   return {
