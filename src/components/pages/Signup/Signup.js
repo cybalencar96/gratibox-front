@@ -82,6 +82,7 @@ export default function Signup() {
             onChange={handleChange("name")}
             value={form.name}
             required
+            inputProps={{ id: "name" }}
           />
           <MyInput
             color="common"
@@ -93,6 +94,7 @@ export default function Signup() {
             type="email"
             required
             title="example@example.com"
+            inputProps={{ id: "email" }}
           />
           <MyInput
             color="common"
@@ -103,7 +105,7 @@ export default function Signup() {
             value={form.password}
             type="password"
             required
-            inputProps={{ pattern: passwordRegex }}
+            inputProps={{ pattern: passwordRegex, id: "password" }}
           />
           <MyInput
             color="common"
@@ -114,7 +116,7 @@ export default function Signup() {
             value={form.confirmPassword}
             type="password"
             required
-            inputProps={{ pattern: passwordRegex }}
+            inputProps={{ pattern: passwordRegex, id: "confirmPassword" }}
           />
         </section>
 

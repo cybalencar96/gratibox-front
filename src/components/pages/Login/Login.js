@@ -101,6 +101,7 @@ export default function Login() {
             value={form.email}
             required
             type="email"
+            inputProps={{ id: "email" }}
           />
           <MyInput
             label="Password"
@@ -110,6 +111,7 @@ export default function Login() {
             value={form.password}
             type="password"
             required
+            inputProps={{ id: "password" }}
           />
         </section>
         <section className="buttons-section">
