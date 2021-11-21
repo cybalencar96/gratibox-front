@@ -53,11 +53,6 @@ You will not choose the item, but you can always choose to be grateful for what 
 ### **Prerequisites**
 
 - npm
-- HTTP server
-
-```sh
-npm install serve -g
-```
 
 <br />
 
@@ -79,16 +74,6 @@ npm i
 
 ### **How to run**
 
-1. build the app
-
 ```sh
-npm run build
+npm start
 ```
-
-2. Run build
-
-```sh
-serve -s build
-```
-
-3. Access http://localhost:5000 (default)
