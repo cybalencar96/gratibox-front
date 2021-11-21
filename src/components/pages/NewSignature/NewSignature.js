@@ -33,7 +33,7 @@ export default function NewSignature() {
   const location = useLocation();
   const search = location.search.replace("?", "").split("&");
   const [formPart, setFormPart] = useState(1);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [addressData, setAddressData] = useState({ name: user.name });
   const [alert, setAlert] = useState({ success: false, error: false });
   const [planData, setPlanData] = useState({
@@ -180,6 +180,7 @@ export default function NewSignature() {
     api
       .subscribe(body, user.token)
       .then((res) => {
+        setUser({ ...user, isSubscriber: true });
         navigate("/signature");
       })
       .catch((err) => {

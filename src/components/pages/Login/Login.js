@@ -28,9 +28,13 @@ export default function Login() {
   useEffect(() => {
     if (user.token && user.isSubscriber) {
       navigate("/signature");
-    } else {
-      setPageLoading(false);
     }
+
+    if (user.token) {
+      navigate("/plans");
+    }
+
+    setPageLoading(false);
   }, []);
 
   const handleChange = (input) => (event) => {
