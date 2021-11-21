@@ -14,21 +14,25 @@ const AvaliationContainer = styled.main`
 
   & .header-section {
     width: 100%;
+    max-width: 500px;
   }
 
   & .header-section p {
     font-weight: 300;
     font-size: 18px;
     margin: 20px 0;
-    max-width: 400px;
+    max-width: 500px;
     color: white;
   }
 
   & .button-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     margin: 10px 0;
+    gap: 10px;
   }
 `;
 

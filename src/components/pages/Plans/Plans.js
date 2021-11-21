@@ -1,29 +1,37 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../contexts/contexts";
 import Title from "../../shared/Title";
 import { PlansContainer } from "./PlansStyles";
 import MyButton from "../../shared/MyButton";
 import api from "../../../services/api";
+import Loading from "../../shared/Loading";
 
 export default function Plans() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-
+  const [pageLoading, setPageLoading] = useState(true);
   useEffect(() => {
     if (!user.token) {
       navigate("/login");
     }
 
-    api.getSubscription(user.token).then((res) => {
-      navigate("/signature");
-    });
+    api
+      .getSubscription(user.token)
+      .then((res) => {
+        navigate("/signature");
+      })
+      .catch((err) => {
+        console.log(err);
+        setPageLoading(false);
+      });
   }, []);
 
   function sendToNewSignature(planType) {
     navigate(`/signature/new?${planType}`);
   }
 
+  if (pageLoading) return <Loading />;
   return (
     <PlansContainer>
       <section className="header-section">

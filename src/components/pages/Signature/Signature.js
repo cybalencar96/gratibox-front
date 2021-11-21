@@ -46,20 +46,19 @@ export default function Signature() {
     const nextDeliverDate = new Date(subscrition.next_deliver_date * 1000);
     let next2;
     let next3;
-
     if (subscrition.subscription_type === "monthly") {
       next2 = dayjs(
         new Date(
           nextDeliverDate.getFullYear(),
-          nextDeliverDate.getMonth + 1,
-          nextDeliverDate.getDay()
+          nextDeliverDate.getMonth() + 1,
+          nextDeliverDate.getDate()
         )
       );
       next3 = dayjs(
         new Date(
           nextDeliverDate.getFullYear(),
-          nextDeliverDate.getMonth + 2,
-          nextDeliverDate.getDay()
+          nextDeliverDate.getMonth() + 2,
+          nextDeliverDate.getDate()
         )
       );
 
@@ -81,8 +80,6 @@ export default function Signature() {
     return [dayjs(nextDeliverDate), next2, next3];
   }
 
-  console.log(subscrition, subscrition && getNext3DeliverDates());
-
   if (!subscrition) return <Loading />;
   return (
     <SignatureContainer>
@@ -97,7 +94,7 @@ export default function Signature() {
           <div>
             <span className="info-title">Plano: </span>
             <span className="info">
-              {subscrition.subscrition_type === "monthly"
+              {subscrition.subscription_type === "monthly"
                 ? "Mensal"
                 : "Semanal"}
             </span>
@@ -145,6 +142,14 @@ export default function Signature() {
           onClick={() => navigate("/avaliation")}
         >
           Avaliar entregas
+        </MyButton>
+
+        <MyButton
+          disableElevation
+          onClick={() => navigate("/")}
+          sx={{ color: "white" }}
+        >
+          Voltar para home
         </MyButton>
       </div>
 

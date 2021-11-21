@@ -7,6 +7,7 @@ import MyButton from "../../shared/MyButton";
 import { UserContext } from "../../../contexts/contexts";
 import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts";
 import api from "../../../services/api";
+import Loading, { ButtonLoading } from "../../shared/Loading";
 
 const labelStyle = {
   style: { fontWeight: "bold", fontSize: "20px" },
@@ -16,6 +17,8 @@ export default function Login() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [alert, setAlert] = useState({ success: false, error: false });
+  const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const [form, setForm] = useState({
     email: "",
@@ -25,6 +28,8 @@ export default function Login() {
   useEffect(() => {
     if (user.token && user.isSubscriber) {
       navigate("/signature");
+    } else {
+      setPageLoading(false);
     }
   }, []);
 
@@ -44,7 +49,7 @@ export default function Login() {
 
   function login(e) {
     e.preventDefault();
-
+    setLoading(true);
     const { email, password } = form;
     api
       .login({ email, password })
@@ -74,6 +79,7 @@ export default function Login() {
           });
       })
       .catch((err) => {
+        setLoading(false);
         setAlert({
           alert,
           error: String(err.response && err.response.statusText),
@@ -81,26 +87,31 @@ export default function Login() {
       });
   }
 
+  if (pageLoading) return <Loading />;
   return (
     <LoginContainer>
       <Title center />
-      <form className="input-section" onSubmit={login}>
-        <MyInput
-          label="Email"
-          variant="outlined"
-          InputLabelProps={labelStyle}
-          onChange={handleChange("email")}
-          value={form.email}
-        />
-        <MyInput
-          label="Password"
-          variant="outlined"
-          InputLabelProps={labelStyle}
-          onChange={handleChange("password")}
-          value={form.password}
-          type="password"
-        />
-
+      <form onSubmit={login}>
+        <section className="inputs-section">
+          <MyInput
+            label="Email"
+            variant="outlined"
+            InputLabelProps={labelStyle}
+            onChange={handleChange("email")}
+            value={form.email}
+            required
+            type="email"
+          />
+          <MyInput
+            label="Password"
+            variant="outlined"
+            InputLabelProps={labelStyle}
+            onChange={handleChange("password")}
+            value={form.password}
+            type="password"
+            required
+          />
+        </section>
         <section className="buttons-section">
           <MyButton
             disableElevation
@@ -108,7 +119,7 @@ export default function Login() {
             sx={{ height: "60px", fontSize: "22px", fontWeight: "bold" }}
             type="submit"
           >
-            Login
+            {loading ? <ButtonLoading color="info" /> : "Entrar"}
           </MyButton>
           <MyButton
             sx={{ color: "white", fontWeight: "bold" }}

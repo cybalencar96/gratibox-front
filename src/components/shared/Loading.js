@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Modal, Box, CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 
 const boxStyle = {
   position: "fixed",
@@ -7,19 +6,23 @@ const boxStyle = {
   height: "100vh",
   top: "0",
   left: "0",
-  bgcolor: "rgb(183, 115, 235, 0.5)",
+  bgcolor: "#6d7ce4",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontSize: "30px",
 };
 
 export default function Loading() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
-    <Modal open={open} onClose={handleClose}>
-      <Box sx={boxStyle}>
-        <CircularProgress />
-      </Box>
-    </Modal>
+    <Box sx={boxStyle}>
+      <CircularProgress size={100} />
+    </Box>
   );
 }
+
+function ButtonLoading() {
+  return <CircularProgress size={30} color="info" />;
+}
+
+export { ButtonLoading };

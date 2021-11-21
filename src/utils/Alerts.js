@@ -5,11 +5,7 @@ function SuccessAlert({ open, onClose, htmlText }) {
     <Snackbar autoHideDuration={3000} open={open} onClose={onClose}>
       <Alert severity="success" sx={{ width: "100%" }}>
         <AlertTitle>Success!</AlertTitle>
-        {htmlText || (
-          <>
-            Yeey!! The action was <strong>successfully completed</strong>!
-          </>
-        )}
+        {htmlText}
       </Alert>
     </Snackbar>
   );
@@ -20,14 +16,21 @@ function ErrorAlert({ open, onClose, htmlText }) {
     <Snackbar autoHideDuration={3000} open={open} onClose={onClose}>
       <Alert severity="error" sx={{ width: "100%" }}>
         <AlertTitle>Error</AlertTitle>
-        {htmlText || (
-          <>
-            Opss... The action was <strong>not completed</strong>!
-          </>
-        )}
+        {htmlText}
       </Alert>
     </Snackbar>
   );
 }
 
-export { SuccessAlert, ErrorAlert };
+function InfoAlert({ open, onClose, htmlText }) {
+  return (
+    <Snackbar autoHideDuration={3000} open={open} onClose={onClose}>
+      <Alert severity="info" sx={{ width: "100%" }}>
+        <AlertTitle>Hey!</AlertTitle>
+        {htmlText}
+      </Alert>
+    </Snackbar>
+  );
+}
+
+export { SuccessAlert, ErrorAlert, InfoAlert };

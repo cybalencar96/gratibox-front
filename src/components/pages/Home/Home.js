@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <HomeContainer>
       <section>
-        <Title />
+        <Title center />
         <p>
           Receba em casa um box com chás, produtos organicos, incensos e muito
           mais...

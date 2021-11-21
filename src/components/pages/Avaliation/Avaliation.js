@@ -8,20 +8,40 @@ import {
   AvalSection,
   BadAvaliationContainer,
 } from "./AvaliationStyles";
-import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
+import {
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import MyButton from "../../shared/MyButton";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek.js";
 import Loading from "../../shared/Loading";
-import { SuccessAlert, ErrorAlert } from "../../../utils/Alerts.js";
+import { SuccessAlert, ErrorAlert, InfoAlert } from "../../../utils/Alerts.js";
 
 dayjs.extend(isoWeek);
+
+const buttonStyle = {
+  primary: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "20px",
+  },
+  secondary: {
+    color: "white",
+  },
+};
 
 export default function Avaliation() {
   const { user } = useContext(UserContext);
   const [deliveries, setDeliveries] = useState(null);
   const [avals, setAvals] = useState([{}, {}, {}]);
-  const [alert, setAlert] = useState({ success: false, error: false });
+  const [alert, setAlert] = useState({
+    success: false,
+    error: false,
+    info: false,
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +83,7 @@ export default function Avaliation() {
     if (!avals[0].deliveryId && !avals[0].deliveryId && !avals[0].deliveryId) {
       return setAlert({
         ...alert,
-        error: "Nada para enviar",
+        info: "Para ser grato na avaliação, você precisa selecionar uma entrega!",
       });
     }
 
@@ -71,7 +91,7 @@ export default function Avaliation() {
       return;
     }
 
-    const results = await Promise.all(
+    await Promise.all(
       avals.map((aval) => {
         if (aval.wasBad || aval.wasGood) {
           const body = {
@@ -87,7 +107,7 @@ export default function Avaliation() {
             body["avaliationType"] = avaliationType;
             body["avaliationDesc"] = aval.inputs.desc;
           }
-          console.log(body);
+
           api.sendAvaliation(body, user.token);
         }
       })
@@ -95,16 +115,27 @@ export default function Avaliation() {
 
     setAlert({
       ...alert,
-      success: "Sua avaliação foi registrada com sucesso!",
+      success: "Sua avaliação foi registrada com sucesso! Aguarde...",
     });
 
-    window.location.reload();
+    setDeliveries(null);
+    api.getDeliveries(user.token).then((res) => {
+      setAvals(
+        avals.map((aval) => ({
+          inputs: {},
+          wasGood: null,
+          wasBad: null,
+          deliveryId: null,
+          date: null,
+        }))
+      );
+      setDeliveries(res.data);
+    });
   }
 
   function isValidBadAvalInputs() {
     for (let i = 0; i < 3; i++) {
       if (avals[i].wasBad) {
-        console.log(avals[i]);
         if (!avals[i].inputs.late && !avals[i].inputs.unlike) {
           setAlert({ ...alert, error: "Selecione o motivo do deslike" });
           return false;
@@ -134,16 +165,22 @@ export default function Avaliation() {
       <AvalSection>
         <img src="/img/image01.jpg" alt="men meditating" />
         <section className="boxes-aval">
-          {deliveries.map((delivery, idx) => (
-            <BoxAval
-              delivery={delivery || {}}
-              setAvals={setAvals}
-              avals={avals}
-              arrId={idx}
-              setAlert={setAlert}
-              alert={alert}
-            />
-          ))}
+          {deliveries.length === 0 ? (
+            <Typography color="primary" align="center" variant="h6">
+              Você é grato à pouco tempo, ainda não recebeu entregas ಥ_ಥ
+            </Typography>
+          ) : (
+            deliveries.map((delivery, idx) => (
+              <BoxAval
+                delivery={delivery || {}}
+                setAvals={setAvals}
+                avals={avals}
+                arrId={idx}
+                setAlert={setAlert}
+                alert={alert}
+              />
+            ))
+          )}
         </section>
       </AvalSection>
 
@@ -173,8 +210,19 @@ export default function Avaliation() {
       )}
 
       <div className="button-container">
-        <MyButton disableElevation variant="contained" onClick={sendAval}>
+        <MyButton
+          disableElevation
+          variant="contained"
+          onClick={sendAval}
+          sx={buttonStyle.primary}
+        >
           Avaliar
+        </MyButton>
+        <MyButton
+          onClick={() => navigate("/signature")}
+          sx={buttonStyle.secondary}
+        >
+          Voltar para minha assinatura
         </MyButton>
       </div>
 
@@ -187,6 +235,11 @@ export default function Avaliation() {
         open={!!alert.error}
         onClose={handleAlertClose("error")}
         htmlText={alert.error}
+      />
+      <InfoAlert
+        open={!!alert.info}
+        onClose={handleAlertClose("info")}
+        htmlText={alert.info}
       />
     </AvaliationContainer>
   );

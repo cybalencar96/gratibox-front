@@ -28,8 +28,11 @@ const SignatureContainer = styled.main`
   & .avaliation {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     margin: 20px 0;
+    gap: 10px;
   }
 `;
 

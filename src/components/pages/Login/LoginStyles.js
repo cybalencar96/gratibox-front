@@ -3,15 +3,19 @@ import styled from "styled-components";
 const LoginContainer = styled.main`
   background-color: #6d7ce4;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
   width: 100vw;
   height: 100vh;
   padding: 110px 20px 80px 20px;
 
-  & .input-section,
+  & form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+  }
+
+  & .inputs-section,
   & .buttons-section {
     display: flex;
     flex-direction: column;
@@ -20,8 +24,8 @@ const LoginContainer = styled.main`
     width: 100%;
   }
 
-  & .input-section {
-    row-gap: 20px;
+  & .inputs-section {
+    row-gap: 30px;
     height: 250px;
   }
 
