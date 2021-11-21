@@ -4,12 +4,12 @@
     <img src="https://github.com/cybalencar96/gratibox-front/blob/main/public/img/419-4195061_be-grateful.png?raw=true" alt="Logo" width="200px" height="auto">
   </a>
 
-<h2 align="center">Gratibox</h2>
+<h3 align="center">Gratibox</h3>
 
   <p align="center">
     Be grateful in life 🙏, it can always get worse 😰
     <br />
-    <a href="https://github.com/cybalencar96/gratibox-front"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/cybalencar96/gratibox-back"><strong>Explore the docs »</strong></a>
     <br />
     <a href="/">View Demo</a>
     <br />
@@ -42,15 +42,13 @@ You will not choose the item, but you can always choose to be grateful for what 
 
 ## **Getting Started**
 
-#
-
-## Prerequisites
+### **Prerequisites**
 
 - npm
 
 <br />
 
-## Installation
+### **Installation**
 
 1.  Clone backend repo
 
@@ -78,7 +76,7 @@ npm i
 
 <br />
 
-## **How to run**
+### **How to run**
 
 1. Start backend server
 
